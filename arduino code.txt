@@ -1,0 +1,336 @@
+#inc lude <LiquidCrys t a l . h>
+#d e f i n e t r i gPi n 9
+#d e f i n e echoPin 10
+i n t r e l a y = 7;//􀀀􀀀􀀀􀀀􀀀􀀀buzzer1􀀀􀀀􀀀􀀀􀀀􀀀
+long microSecond , cmDistance ;
+cons t i n t r s = 12 , en = 11 , d4 = 5 , d5 = 4 , d6 = 3 , d7 = 2 ;
+LiquidCrys t a l l cd ( r s , en , d4 , d5 , d6 , d7 ) ;
+cons t i n t buzzerPin = 8 ;
+cons t i n t min1 = 1 5 ;
+cons t i n t max1 = 4 0 ;
+long durat ion ;
+i n t pi e zoPin=8;
+i n t di s t anc e ;
+void setup ( )
+{
+S e r i a l . begin ( 9 6 0 0 ) ;
+pinMode ( t r i gPin , OUTPUT) ;
+pinMode ( echoPin , INPUT) ;
+pinMode ( r e lay , OUTPUT) ;
+pinMode ( buzzerPin , OUTPUT) ;
+S e r i a l . begin ( 9 6 0 0 ) ; // S t a r t s the s e r i a l communication
+l cd . begin ( 1 6 , 2 ) ;
+l cd . s e tCur sor ( 0 , 0 ) ; // s e t s the cur s o r at row 0 column 0
+l cd . pr int (" l e v e l moni tor ing " ) ;
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . pr int (" St a r t ing Module . . ! ! " ) ;
+de lay ( 1 0 0 0 ) ;
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . pr int ("Water Leve l Management " ) ;
+{
+void loop ( )
+{
+d i g i t a lWr i t e ( t r i gPin , LOW) ;
+de layMi c ros e conds ( 2 ) ;
+d i g i t a lWr i t e ( t r i gPin , HIGH) ;
+de layMi c ros e conds ( 1 0 ) ;
+d i g i t a lWr i t e ( t r i gPin , LOW) ;
+durat ion = pul s e In ( echoPin , HIGH) ;
+microSecond = durat ion ;
+cmDistance = microSecond /60;
+// Ca l cul a t ing the di s t anc e
+di s t anc e= durat ion  0 . 0 3 4 / 2 ;
+de lay ( 5 0 0 ) ;
+S e r i a l . p r i n t l n ( di s t anc e ) ;
+de lay ( 5 0 0 ) ;
+i f ( cmDistance==max1 j j cmDistance==(max1+1 ) j j cmDistance==(max1+2))
+{
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . c l e a r ( ) ;
+l cd . pr int ("MOTOR ON" ) ;
+// pr int the number o f s e conds s i n c e r e s e t :
+l cd . s e tCur sor ( 0 , 1 ) ;
+l cd . pr int (" Di s tanc e =");
+l cd . pr int ( cmDistance ) ;
+l cd . pr int ("cm" ) ;
+de lay ( 1 0 ) ;
+d i g i t a lWr i t e ( r e lay , HIGH) ;
+d i g i t a lWr i t e ( buzzerPin , HIGH) ;
+de lay ( 1 0 0 0 ) ;
+d i g i t a lWr i t e ( buzzerPin , LOW) ;
+g
+e l s e i f ( cmDistance>=max1)
+{
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . c l e a r ( ) ;
+l cd . pr int ("MOTOR ON" ) ;
+// pr int the number o f s e conds s i n c e r e s e t :
+l cd . s e tCur sor ( 0 , 1 ) ;
+l cd . pr int (" Di s tanc e =");
+l cd . pr int ( cmDistance ) ;
+l cd . pr int ("cm" ) ;
+d i g i t a lWr i t e ( r e lay , HIGH) ;
+de lay ( 1 0 0 0 ) ;
+g
+e l s e i f ( cmDistance==min1 j j cmDistance==(min1􀀀1))
+f
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . c l e a r ( ) ;
+l cd . pr int ("MOTOR ON" ) ;
+// pr int the number o f s e conds s i n c e r e s e t :
+l cd . s e tCur sor ( 0 , 1 ) ;
+l cd . pr int (" Di s tanc e =");
+l cd . pr int ( cmDistance ) ;
+l cd . pr int ("cm" ) ;
+de lay ( 1 0 ) ;
+d i g i t a lWr i t e ( r e lay , HIGH) ;
+d i g i t a lWr i t e ( buzzerPin , HIGH) ;
+de lay ( 1 0 0 0 ) ;
+d i g i t a lWr i t e ( buzzerPin , LOW) ;
+g
+e l s e i f ( cmDistance>=min1 )
+f
+l cd . s e tCur sor ( 0 , 1 ) ;
+l cd . pr int (" Di s tanc e =");
+l cd . pr int ( cmDistance ) ;
+l cd . pr int ("cm" ) ;
+g
+e l s e i f ( cmDistance==min1 )
+f
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . c l e a r ( ) ;
+l cd . pr int ("MOTOR OFF" ) ;
+l cd . s e tCur sor ( 0 , 1 ) ;
+// pr int the number o f s e conds s i n c e r e s e t :
+l cd . pr int ("Tank Ful l " ) ;
+d i g i t a lWr i t e ( r e lay , LOW) ;
+d i g i t a lWr i t e ( buzzerPin , HIGH) ;
+de lay ( 1 0 0 0 ) ;
+d i g i t a lWr i t e ( buzzerPin , LOW) ;
+g
+e l s e i f ( cmDistance<=min1 )
+f
+l cd . c l e a r ( ) ;
+l cd . begin (16 , 2 ) ;
+l cd . c l e a r ( ) ;
+l cd . pr int ("MOTOR OFF" ) ;
+l cd . s e tCur sor ( 0 , 1 ) ;
+// pr int the number o f s e conds s i n c e r e s e t :
+l cd . pr int ("Tank Ful l " ) ;
+d i g i t a lWr i t e ( r e lay , LOW) ;
+de lay ( 1 0 0 0 ) ;
+}
+}
+ ArduinoConnection.java:
+package s e r v i c e s ;
+import java . i o . Buf feredReader ;
+import java . i o . IOException ;
+import java . i o . InputStream ;
+import java . i o . InputStreamReader ;
+import java . i o . OutputStream ;
+import java . s q l . Connection ;
+import java . s q l . DriverManager ;
+import java . s q l . PreparedStatement ;
+import java . s q l . SQLException ;
+import gnu . i o . CommPor t Ident i f ier ;
+import gnu . i o . S e r i a lPo r t ;
+import gnu . i o . Se r i alPo r tEvent ;
+import gnu . i o . Se r i a lPo r tEv entLi s t ene r ;
+import java . u t i l . Enumeration ;
+18
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+import java . u t i l . Pr o pe r t i e s ;
+import javax . sound . midi . MidiDevice . Inf o ;
+import connectDB . DBconnect ;
+publ i c c l a s s ArduinoConnection implements Se r i a lPo r tEv entLi s t ene r f
+S e r i a lPo r t s e r i a lPo r t ;
+/ The por t we ' r e normal ly going to use . /
+p r i v a t e s t a t i c f i n a l St r ing PORT NAMES[ ] = f"/ dev/ t ty . u s b s e r i a l􀀀A9007UX1" // Mac OS X"/dev/ttyUSB0 " , //Linux
+"COM19" , // Windows
+g ;
+s t a t i c St r ing inputLine ;
+s t a t i c Buf feredReader input ;
+p r i v a t e s t a t i c OutputStream output ;
+p r i v a t e s t a t i c f i n a l i n t TIME OUT = 2000;
+p r i v a t e s t a t i c f i n a l i n t DATA RATE = 9600;
+Pr o p e r t i e s prop = new Pr o p e r t i e s ( ) ;
+publ i c void i n i t i a l i z e ( ) f
+CommPor t Ident i f ier por t Id = n u l l ;
+Enumeration portEnum =CommPor t Ident i f ier . g e tPo r t I d e n t i f i e r s ( ) ;
+// Fi r s t , Find an ins t anc e o f s e r i a l por t as s e t in PORT NAMES.
+whi l e ( portEnum. hasMoreElements ( ) ) f
+CommPor t Ident i f ier cur rPor t Id = ( CommPor t Ident i f ier )
+portEnum. nextElement ( ) ;
+f o r ( St r ing portName : PORT NAMES) f
+i f ( cur rPor t Id . getName ( ) . equa l s ( portName ) ) f
+por t Id = cur rPor t Id ;
+break ;
+g
+19
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+g
+g
+i f ( por t Id == n u l l ) f
+System . out . p r i n t l n ("Could not f i n d COM por t . . . " ) ;
+r e turn ;
+g
+t ry f
+s e r i a lPo r t = ( S e r i a lPo r t ) por t Id . open ( t h i s . g e tCl a s s ( ) . getName ( ) ,
+TIME OUT) ;
+s e r i a lPo r t . s e tSe r ialPor tParams (DATA RATE, S e r i a lPo r t .DATABITS 8 ,
+S e r i a lPo r t . STOPBITS 1 , S e r i a lPo r t .PARITY NONE) ;
+// open the s t reams
+input = new Buf feredReader ( newInputStreamReader ( s e r i a lPo r t . ge t Inp
+tStream ( ) ) ) ;
+output = s e r i a lPo r t . getOutputStream ( ) ;
+// output=s e r i a lPo r t . ge tOutputBuf f e rSi z e ( ) ;
+s e r i a lPo r t . addEventLi s tener ( t h i s ) ;
+s e r i a lPo r t . not i fyOnDataAvai labl e ( t rue ) ;
+g catch ( Except ion e ) f
+System . e r r . p r i n t l n ( e . t oSt r ing ( ) ) ;
+g
+g
+publ i c synchroni z ed void c l o s e ( ) f
+i f ( s e r i a lPo r t != n u l l ) f
+s e r i a lPo r t . removeEventLi s tener ( ) ;
+s e r i a lPo r t . c l o s e ( ) ;
+g
+20
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+g
+publ i c synchroni z ed void s e r i a lEv e n t ( Se r i alPor tEvent oEvent ) f
+i f ( oEvent . getEventType ( ) == Se r ialPo r tEvent .DATA AVAILABLE) f
+t ry f
+i f ( input . ready ( ) )
+inputLine=input . r eadLine ( ) ;
+System . out . p r i n t l n (" value = "+inputLine ) ;
+Connection conn=DBconnect . getConnect ( ) ;
+PreparedStatement ps = conn . prepareStatement ("UPDATE l e v e l SET
+value=? where id =1");
+ps . s e t S t r i n g ( 1 , inputLine ) ;
+ps . executeUpdate ( ) ;
+g
+catch ( Except ion e )
+f
+System . e r r . p r i n t l n ( e ) ;
+e . pr intStackTrac e ( ) ;
+g
+g
+g
+// Ignor e a l l the othe r eventTypes , but you should c ons ide r the
+21
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+othe r ones .
+p r i v a t e Object open ( St r ing inputLine , St r ing s t r i n g ) f
+// TODO Auto􀀀gene rat ed method s tub
+r e turn n u l l ;
+g
+publ i c s t a t i c void main ( St r ing [ ] args ) throws SQLException f
+ArduinoConnection main = new ArduinoConnection ( ) ;
+main . i n i t i a l i z e ( ) ;
+Thread t=new Thread ( ) f
+publ i c void run ( ) f
+// the f o l l owi n g l i n e wi l l keep t h i s app a l i v e f o r 1000 seconds ,
+// wai t ing f o r event s to occur and r e sponding to them
+( p r i n t i n g incoming mes sages to c ons o l e ) .
+t ry fThread . s l e e p ( 1 0 0 0 0 0 0 ) ; g catch ( Int e r rupt edExc ept ion i e ) fg
+g
+g ;
+t . s t a r t ( ) ;
+System . out . p r i n t l n (" Star t ed " ) ;
+g
+g
+ login.java:
+package s e r v i c e s ;
+import java . i o . IOException ;
+import javax . s e r v l e t . Se rvl e tExc ept i on ;
+import javax . s e r v l e t . ht tp . Ht tpSe rvl e t ;
+22
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+import javax . s e r v l e t . ht tp . Ht tpSe rvl e tReque s t ;
+import javax . s e r v l e t . ht tp . Ht tpSe rvl e tRe spons e ;
+/
+ S e r v l e t implementat ion c l a s s Login
+/
+publ i c c l a s s Login ext ends Ht tpSe rvl e t f
+p r i v a t e s t a t i c f i n a l long s e r ia lVe r s i onUID = 1L;
+/
+ De faul t c ons t ruc t o r .
+/
+publ i c Login ( ) f
+// TODO Auto􀀀gene rat ed c ons t ruc t o r s tub
+super ( ) ;
+g
+/
+ @see Ht tpSe rvl e t#doGet ( Ht tpSe rvl e tReque s t r eque s t ,
+Ht tpSe rvl e tRe spons e r e spons e )
+/
+pr o t e c t ed void doGet ( Ht tpSe rvl e tReque s t r eque s t ,
+Ht tpSe rvl e tRe spons e r e spons e ) throws Se rvl e tExc ept ion , IOException f
+// TODO Auto􀀀gene rat ed method s tub
+r e spons e . ge tWr i t e r ( ) . append (" Served at :
+" ) . append ( r eque s t . getContextPath ( ) ) ;
+g
+/
+ @see Ht tpSe rvl e t#doPost ( Ht tpSe rvl e tReque s t r eque s t ,
+Ht tpSe rvl e tRe spons e r e spons e )
+/
+pr o t e c t ed void doPost ( Ht tpSe rvl e tReque s t r eque s t ,
+Ht tpSe rvl e tRe spons e r e spons e ) throws Se rvl e tExc ept ion , IOException f
+23
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+// TODO Auto􀀀gene rat ed method s tub
+doGet ( r eque s t , r e spons e ) ;
+St r ing emai l=r eque s t . getParameter (" emai l " ) ;
+St r ing pas s=r eque s t . getParameter (" password " ) ;
+i f ( emai l . equa l s (" admin@gmail . com") && pas s . equa l s (" admin " ) )
+f
+r e spons e . s endRedi r e c t (" di spl a yLe v e l . j sp " ) ;
+g
+e l s e
+f
+r eque s t . g e t S e s s i o n ( ) . s e tAt t r i b u t e ("msg" , "Wrong User Cr edent i a l s . . ! ! " ) ;
+r e spons e . s endRedi r e c t (" l o g i n . j sp " ) ;
+g
+g
+g
+ DBconnect.java
+package connectDB ;
+import java . s q l . Connection ;
+import java . s q l . DriverManager ;
+publ i c c l a s s DBconnect f
+s t a t i c Connection con = n u l l ;
+publ i c s t a t i c Connection getConnect ( )
+f
+i f ( con==n u l l )
+f
+t ry
+f
+Clas s . forName ("com. mysql . jdbc . Dr ive r " ) ;
+con = DriverManager . getConnect ion (" jdbc : mysql : / / l o c a l h o s t :3306/
+24
+Sanivani K.B.P. Polytechnic, Kopargaon. Department of Computer Technology { 2018-19
+Internet of Things based Water Level Monitoring System Managing .
+wa t e r l e v e l d b " ," root " , " " ) ;
+r e turn con ;
+}
+catch ( Except ion e )
+f
+e . pr intStackTrac e ( ) ;
+}
+}
+r e turn con ;
+}
+}
